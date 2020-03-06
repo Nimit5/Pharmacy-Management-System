@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 5 Mar, 2020, 8:14:10 AM
+    Author     : jainn
+*/
+#carouselExampleIndicators{
+   maxheight:60px ;
+   maxwidth:50px;
+   color:black;
+   height: 800px;
+   width: 1200px;
+   align-self: auto;
+   margin-left: 50px; 
+}
+/*.carousel slide{
+    width: 800px;
+    height: 800px;
+}*/
