@@ -15,27 +15,24 @@
         <title>Login Page</title>
     </head>
     <body>
-        
+
         <%
-         String uname = request.getParameter("un"); 
-         String pass = request.getParameter("ps"); 
-         Class.forName("com.mysql.jdbc.Driver");
-         Connection con=DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy","root","Nimit@051099");
-         PreparedStatement st=con.prepareStatement("select * from login where username=? and pass=?");
-         st.setString(1,uname);
-         st.setString(2,pass);
-         ResultSet rs = st.executeQuery();
-         if(rs.next())
-            {
+            String uname = request.getParameter("un");
+            String pass = request.getParameter("ps");
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy", "root", "Nimit@051099");
+            PreparedStatement st = con.prepareStatement("select * from login where username=? and pass=?");
+            st.setString(1, uname);
+            st.setString(2, pass);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
                 HttpSession hs = request.getSession();
                 hs.setAttribute(uname, "uname");
                 hs.setAttribute(pass, "pass");
                 response.sendRedirect("welcome.jsp");
+            } else {
+                response.sendRedirect("login.jsp");
             }
-         else
-         {
-         response.sendRedirect("login.jsp");
-         }
-         %>
+        %>
     </body>
 </html>

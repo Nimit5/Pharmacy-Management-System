@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script>
+            jQuery(document).ready(function ($) {
+                var wrapper = $(".input_fields_wrap");
+                var add_button = $(".input_field_button");
+
+                $(add_button).click(function (e) {
+                    e.preventDefault();
+                    $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>');
+                });
+            });
+        </script>
+    </head>
+
+
+    <body>
+        
+        <div class="input_fields_wrap">
+            <button class="add_field_button">Add More Medicine</button>
+            <div><input type="text" name="mytext[]"></div>
+        </div>
+    </body>
+</html>
