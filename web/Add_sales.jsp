@@ -11,8 +11,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        <title>Sales</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -79,16 +77,16 @@
         </nav>
 
 
-        <form>
+        <form action="sales_process.jsp">
             <div style="border: 3px solid black; padding: 15px; margin: 5px; border-radius: 5px;">  
 
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Customer Name</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Customer Name">
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Customer Name" name="custname">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput2">Customer Contact Number</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Customer Contact Number">
+                    <input type="text" class="form-control" id="exampleFormControlInput2" name="custnum" placeholder="Customer Contact Number">
                 </div>
                 <script type='text/javascript'>
                     $(document).ready(function () {
@@ -98,56 +96,59 @@
                         });
                     });
                 </script>
-                <%
-                    try {
-                        String uname = request.getParameter("un");
-                        String pass = request.getParameter("ps");
-
-                        Class.forName(
-                                "com.mysql.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy", "root", "Nimit@051099");
-                        PreparedStatement st = con.prepareStatement("select * from login where username=? and pass=?");
-                        ResultSet rs = st.executeQuery();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        String sqlMessage = e.getMessage();
-                    }
-
-                %>
                 <table class="table" id="POITable" border="2px">
-                    <tr>
+                    <tr >
                         <th>Sl No</th>
+                        <th>Select</th>
                         <th>Medicine Name</th>
                         <th>Quantity</th>
-                        <th>Cost</th>
-                        <th>Amount</th>
                         <th>Action</th>
                     </tr>
-                    <tr>
-                        <td><i class="srno"></i></td>
+                    <tr name="some">
+                        <td><i class="srno" id="total"></i></td>
+
                         <td>
                             <select class="search_type" name="select_one">
                                 <option value="">Select</option>
-                                <option value="abc">abc</option>
-                                <option value="def">acd</option>
-                                <option value="xyz">aep</option>
-                            </select>
-                        </td>
-                        <td><input type="text" size="8"/></td>
-                        <td><input type="text" size="8"/></td>
+                                <%
+                                    try {
 
-                        <td><input type="text" size="8"/></td>
+                                        Class.forName(
+                                                "com.mysql.jdbc.Driver");
+                                        Connection con = DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy", "root", "Nimit@051099");
+                                        PreparedStatement st = con.prepareStatement("select * from medicines");
+                                        ResultSet rs = st.executeQuery();
+
+                                        while (rs.next()) {%>
+
+                                <option value="<%=rs.getString("M_name")%>"><%=rs.getString("M_name")%>
+                                </option>
+
+                                <% }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        String sqlMessage = e.getMessage();
+                                    }
+                                %>
+                            </select>
+
+                        </td>
+                        <td><input type="text" size="8" name="mnames" placeholder="medicine name"/></td>
+
+                        <td><input type="text" size="8" name="mqty"/></td>
+
 
                         <td><button type="button" onclick="deleteRow(this)">-</button><button type="button" onclick="insRow()">+</button></td>
                     </tr>
                 </table>
 
+                <input type="hidden" id="hf" name="hidf"/>
                 <script type='text/javascript'>
                     function deleteRow(row)
                     {
                         var i = row.parentNode.parentNode.rowIndex;
                         document.getElementById('POITable').deleteRow(i);
+
                     }
                     function insRow()
                     {
@@ -157,21 +158,39 @@
                         //new_row.cells[0].innerHTML = len; //auto increment the srno
                         var inp1 = new_row.cells[1].getElementsByTagName('select')[0];
                         inp1.id += len;
+                        console.log(inp1.id);
                         inp1.value = '';
                         new_row.cells[2].innerHTML = '';
-                        new_row.cells[4].getElementsByTagName('input')[0].value = "";
+                        new_row.cells[3].getElementsByTagName('input')[0].value = "";
                         x.appendChild(new_row);
+
+                    }
+                    function final()
+                    {
+                        var x = document.getElementById("POITable").rows.length;
+                        localStorage.setItem('row-count', x);
+                        //document.getElementById("hf").innerHTML = x;
+                        document.getElementById("hf").value = x;
+                    }
+                    function assign()
+                    {
+                        var i = document.getElementById("POITable").rows.length;
+
+                        //document.getElementById("hf").innerHTML = x;
+                        //document.getElementById("hf").value = x;
                     }
                 </script>
             </div> 
+
+            <button type="submit" onclick="final()" class="btn btn-success"  style="float: right; margin-right:10px; border: 2px solid black; ">Proceed</button>
 
         </form>
 
 
 
-        <form>
-            <button type="button" class="btn btn-success"  style="float: right; margin-right:10px; border: 2px solid black; ">Place Order</button>
-        </form>  
+
+
+
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
                 integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

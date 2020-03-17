@@ -1,36 +1,27 @@
 <%-- 
-    Document   : welcome
-    Created on : 5 Mar, 2020, 12:42:56 PM
+    Document   : sales_process
+    Created on : 12 Mar, 2020, 11:42:59 AM
     Author     : jainn
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*,javax.servlet.http.HttpSession" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <%
-
-        if(session.getAttribute("uname") == null || session.getAttribute("pass") == null) {
-            response.sendRedirect("login.jsp");
-        }
-
-    %>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
               integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <title>Home</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="index.css">
-
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Sales</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <title>Sale</title>
     </head>
-
+    <script type='text/javascript'>
+        var t = localStorage.getItem('row-count') - 1;
+        console.log(t);
+    </script>
     <body>
         <nav class="navbar navbar-light" style="background-color: #3CB371; border-radius: 5px;">
             <span class="navbar-text">
@@ -55,7 +46,7 @@ and open the template in the editor.
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Medi_Details.jsp">
+                        <a class="nav-link" href="contact.html">
                             <h5>Medicines</h5>
                         </a>
                     </li>
@@ -67,20 +58,29 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-        <div style="margin-left: 135px; margin-top: 25px;">
-            <h4>DASHBOARD</h4>
-        </div>
-        <div style="background-color:#3CB371 ; margin: 10px 75px; margin-top: 20px;  padding: 10px; padding-left: 100px; width: 300px; color: red;">
-            <a href="Add_Medi.jsp" style="text-decoration: none; color: black; ">Add Medicines</a>
-        </div>
-        <div style="background-color:#3CB371 ; margin: 10px 75px; padding: 10px; padding-left: 100px; width: 300px; color: black;">
-            <a href="Add_Sales1.jsp" style="text-decoration: none; color: black; " >Add Sales</a>
-        </div>
-        <div style="background-color:#3CB371; margin: 10px 75px; padding: 10px; padding-left: 100px; width: 300px; color: black;">
-            <a href="Medi_Details.jsp" style="text-decoration: none; color: black; " >Medicines Details</a>
-        </div>
-        <div style="background-color:#3CB371 ; margin: 10px 75px; padding: 10px; padding-left: 100px; width: 300px; color: black; ">
-            <a href="Add_Medi.jsp" style="text-decoration: none; color: black; " >Sales Details</a>
-        </div>
+
+        <%
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy", "root", "Nimit@051099");
+            String cust_name = request.getParameter("custname");
+            String cust_num = request.getParameter("custnum");
+            String total_medi=request.getParameter("hidf");
+            int t=Integer.parseInt(total_medi)-1;          
+            String mname[] = request.getParameterValues("some");
+            String mqty[] = request.getParameterValues("mqty");
+            String x=request.getParameter("mess");
+            System.out.println(cust_name);
+            System.out.println(cust_num);
+            System.out.println(t);
+            out.println(cust_name);
+            out.println(cust_num);
+            out.println(t);
+            int l=Integer.parseInt(total_medi)-1;
+            /*for(int p=0;p<l;p++)
+            {
+                System.out.println(mname[p]);
+                System.out.println(mqty[p]);
+            }*/
+         %>
     </body>
 </html>

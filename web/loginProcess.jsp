@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,javax.servlet.http.HttpSession" %>
 
 <!DOCTYPE html>
 <html>
@@ -26,11 +26,10 @@
             st.setString(2, pass);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                HttpSession hs = request.getSession();
-                hs.setAttribute(uname, "uname");
-                hs.setAttribute(pass, "pass");
+                session.setAttribute(uname , uname);
+                session.setAttribute(pass , pass);
                 response.sendRedirect("welcome.jsp");
-            } else {
+            }else {
                 response.sendRedirect("login.jsp");
             }
         %>
