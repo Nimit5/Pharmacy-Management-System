@@ -16,10 +16,10 @@ and open the template in the editor.
 <html>
     <%
 
-        if(session.getAttribute("uname") == null || session.getAttribute("pass") == null) {
+        /*if(session.getAttribute("uname") == null || session.getAttribute("pass") == null) {
             response.sendRedirect("login.jsp");
         }
-
+*/
     %>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
