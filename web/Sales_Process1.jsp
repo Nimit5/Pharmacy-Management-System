@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,java.lang.*" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -91,7 +91,26 @@
                             int total = 0;
                             String[] cb1 = request.getParameterValues("cb1");
                             String[] cb2 = request.getParameterValues("cb2");
-                            int k, sr;
+                            int k, sr, z;
+                            int x = cb1.length;
+                            int[] cb3 = new int[x];
+                            int[] upd = new int[x];
+                            z = 0;
+                            for (k = 0; k < cb1.length; k++) {
+                                System.out.println(cb1[k]);
+                            }
+
+                            for (String r : cb2) {
+                                if (r != "") {
+                                    cb3[z] = Integer.parseInt(r);
+                                    z++;
+                                }
+                            }
+                            for (int y = 0; y < z; y++) {
+
+                                System.out.println(cb3[y]);
+                            }
+
                             for (k = 0, sr = 1; k < cb1.length; k++, sr++) {
                                 int amt = 0;
                                 PreparedStatement st = con.prepareStatement("select * from medicines where M_name=?");
@@ -102,6 +121,7 @@
                                     while (rs.next()) {
                                         i = i + 1;
 
+                                        upd[k] = rs.getInt(5) - cb3[k];
 
                         %>
 
@@ -112,39 +132,54 @@
                             <td><%=rs.getString(2)%></td>
                             <td><%=rs.getString(3)%></td>
                             <td><%=rs.getInt(4)%></td>
-                            <td><%=cb2[k]%></td>
-                            <% amt = Integer.parseInt((cb2[k])) * rs.getInt(4);
+                            <td><%=cb3[k]%></td>
+                            <%
+                                int quant = cb3[k];
+                                int cos = rs.getInt(4);
+                                amt = quant * cos;
                                 total = total + amt;
-                                int upd;
-                                upd = rs.getInt(5) - Integer.parseInt((cb2[k]));
-                                if(upd>=0){
-                                PreparedStatement st1 = con.prepareStatement("update medicines set M_quantity=? where M_name=? ");
-                                st1.setInt(1, upd);
-                                st1.setString(2, cb1[k]);
-                                int rs1 = st1.executeUpdate();
-                                }
+                                cos = 0;
+                                for (int g = 0; g < upd.length; g++) {
                             %>
-                            <td><%=amt%></td>
-                        </tr>
-                        <%
+                    <input type = "hidden" name = "update" value = "<%= upd[g]%>">
+                    <input type = "hidden" name = "length" value = "<%= x%>">
+                    <%
+                        }
+                        for (int h = 0; h < cb1.length; h++) {
+                    %>
+                    <input type = "hidden" name = "medicinesnames" value = "<%= cb1[h]%>">
+                    <input type = "hidden" name = "cust_name" value = "<%=cust_name%>">
+                    <input type = "hidden" name = "cust_num" value = "<%=cust_num%>">
 
-                                    }
+
+                    <%
+
+                        }
+
+
+                    %>
+                    <td><%=amt%></td>
+                    </tr>
+                    <%
 
                                 }
+
                             }
-                        %>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><b>TOTAL AMOUNT</b></td>
-                            <td><%=total%></td>
-                        </tr>
+                        }
+                    %>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>TOTAL AMOUNT</b></td>
+                        <td><%=total%></td>
+                    </tr>
                     </tbody>
             </table>
             <button type="submit" class="btn btn-success" style="float: right; margin-right: 4%;">ORDER</button>
+
         </form>    
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
                 integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

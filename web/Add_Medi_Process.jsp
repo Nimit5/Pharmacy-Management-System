@@ -26,12 +26,15 @@
             st1.setString(1, Mname);
             ResultSet rs = st1.executeQuery();
             if (rs.next()) {
+                int present;
+                present = rs.getInt(5);
+                Mqty+=present;
                 PreparedStatement st2 = con.prepareStatement("update medicines set M_quantity=?,M_cost=? where M_name=? ");
                 st2.setInt(1, Mqty);
                 st2.setInt(2, Mcost);
                 st2.setString(3, Mname);
                 int rs1 = st2.executeUpdate();
-                
+
             } else {
                 PreparedStatement st = con.prepareStatement("insert into medicines (M_name, M_type, M_company, M_cost, M_quantity)"
                         + " values (?, ?, ?, ?, ?)");

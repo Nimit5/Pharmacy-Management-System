@@ -6,7 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
-<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="javax.servlet.http.*,javax.servlet.*,javax.servlet.http.HttpSession,java.lang.Math" %>
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">
+                        <a class="nav-link" href="Medi_Details.jsp">
                             <h5>Medicines</h5>
                         </a>
                     </li>
@@ -55,12 +55,41 @@
             </div>
         </nav>
         <%
-            int order = 0;
-            order++;
+            String[] medi = request.getParameterValues("medicinesnames");
+            String[] updates = request.getParameterValues("update");
+            String[] l = request.getParameterValues("length");
+            double sqrt = Math.sqrt(medi.length);
+            int sq = (int) sqrt;
+            System.out.println("MEDI LENGTH IS " + medi.length);
+            System.out.println("UPDATES LENGTH IS " + updates.length);
+            System.out.println("LENGTH IS " + sq);
+
+            int i, j, orderID = 0;
+            orderID++;
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://Localhost:3306/pharmacy", "root", "Nimit@051099");
+            j = sq;
+            for (i = 0; i < sq; i++) {
+                System.out.println(medi[i]);
+                System.out.println(Integer.parseInt(updates[j]));
+                int z = Integer.parseInt(updates[j]);
+                PreparedStatement st1 = con.prepareStatement("update medicines set M_quantity=? where M_name=? ");
+                if(z>=0){
+                st1.setInt(1, z);
+                }
+                else
+                {
+                st1.setInt(1, 0);
+                }
+                st1.setString(2, medi[i]);
+                int rs1 = st1.executeUpdate();
+                j++;
+            }
         %>
         <div class="alert alert-success" role="alert">
-            Your Order is Placed !!!
-            
+            <%    orderID++;           %>
+            Your Order is Placed !!! Order ID is <%=orderID%>
+
         </div>
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

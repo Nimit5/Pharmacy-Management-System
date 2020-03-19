@@ -50,7 +50,7 @@ and open the template in the editor.
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="About.html">
+                        <a class="nav-link" href="welcome.jsp">
                             <h5>Dashboard</h5>
                         </a>
                     </li>
@@ -60,7 +60,7 @@ and open the template in the editor.
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.jsp">
+                        <a class="nav-link" href="Sales.jsp">
                             <h5>Sales</h5>
                         </a>
                     </li>
