@@ -80,7 +80,7 @@ and open the template in the editor.
             <a href="Medi_Details.jsp" style="text-decoration: none; color: black; " >Medicines Details</a>
         </div>
         <div style="background-color:#3CB371 ; margin: 10px 75px; padding: 10px; padding-left: 100px; width: 300px; color: black; ">
-            <a href="Add_Medi.jsp" style="text-decoration: none; color: black; " >Sales Details</a>
+            <a href="Sales.jsp" style="text-decoration: none; color: black; " >Sales Details</a>
         </div>
     </body>
 </html>

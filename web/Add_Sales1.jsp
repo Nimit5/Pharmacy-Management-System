@@ -60,7 +60,7 @@
                 </ul>
             </div>
         </nav>
-        <form action="Sales_Process1.jsp">
+        <form action="Sales_Process1.jsp" method="post">
             <table class="table table-bordered table-dark">
                 <thead>
 
@@ -120,6 +120,7 @@
                         <%
                                 }
                             }
+                            con.close();
                         %>
                     </tbody>
             </table>

@@ -54,10 +54,12 @@
                 </ul>
             </div>
         </nav>
-        <form action="Order.jsp">
+        <form action="Order1.jsp" method="post">
             <table class="table table-bordered table-dark">
                 <thead>
                     <%
+                        response.setHeader("Cache-Control", "no-cache,no store,must revalidate");
+                        response.setHeader("Pragma", "no-cache");
                         String cust_name = request.getParameter("custname");
                         String cust_num = request.getParameter("custnum");
                     %>
@@ -139,34 +141,38 @@
                                 amt = quant * cos;
                                 total = total + amt;
                                 cos = 0;
-                                for (int g = 0; g < upd.length; g++) {
                             %>
-                    <input type = "hidden" name = "update" value = "<%= upd[g]%>">
-                    <input type = "hidden" name = "length" value = "<%= x%>">
-                    <%
-                        }
-                        for (int h = 0; h < cb1.length; h++) {
-                    %>
+
+                            <%
+                                }
+                                for (int h = 0; h < x; h++) {
+                            %>
                     <input type = "hidden" name = "medicinesnames" value = "<%= cb1[h]%>">
-                    <input type = "hidden" name = "cust_name" value = "<%=cust_name%>">
-                    <input type = "hidden" name = "cust_num" value = "<%=cust_num%>">
-
 
                     <%
-
                         }
-
-
                     %>
+
                     <td><%=amt%></td>
                     </tr>
                     <%
-
-                                }
-
                             }
                         }
                     %>
+                    <input type = "hidden" name = "cust_name" value = "<%=cust_name%>">
+                    <input type = "hidden" name = "cust_num" value = "<%=cust_num%>">
+                    <input type = "hidden" name = "length" value = "<%= x%>">
+                    <%for (int g = 0; g < x; g++) {
+                    %>
+                    <input type = "hidden" name = "mquant" value = "<%= cb3[g]%>">
+                    <input type = "hidden" name = "update" value = "<%= upd[g]%>">
+
+
+                    <%
+                        }
+                        con.close();
+                    %>
+                    <input type = "hidden" name = "bill" value = "<%=total%>">
                     <tr>
                         <td></td>
                         <td></td>
